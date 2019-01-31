@@ -208,4 +208,18 @@ class ProductsController extends Controller
         ProductsAttribute::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', 'Attribute has been deleted successfully'); 
     }
+
+    //Using Category URL variable to display items within the category
+    public function products($url = null)
+    {
+        // echo $url; die;
+        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+        $categoryList = Category::where(['url' => $url])->first();
+        $productsAll = Product::where(['category_id' => $categoryList->id])->get();
+
+        // echo $category->id; die;
+        
+        
+        return view('products.list')->with(compact('categories','categoryList', 'productsAll'));
+    }
 }

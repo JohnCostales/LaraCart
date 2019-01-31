@@ -17,9 +17,11 @@ Route::match(['get', 'post'], '/admin', 'AdminController@login');
 
 Auth::routes();
 
+// All User Access
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/products/{url}', 'ProductsController@products');
 
-//Admin middleware. Routes only accissible to logged in users
+// Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/admin/dashboard','AdminController@dashboard');
     Route::get('/admin/settings','AdminController@settings');
