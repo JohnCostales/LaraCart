@@ -11,15 +11,19 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+// Default Templating
+// Route::get('/', 'IndexController@index');
 
 Route::match(['get', 'post'], '/admin', 'AdminController@login');
 
 Auth::routes();
 
 // All User Access
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/products/{url}', 'ProductsController@products');
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/products/{url}', 'ProductsController@products');
+
+// React Templating
+Route::get('/', 'Api\IndexController@index');
 
 // Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){
