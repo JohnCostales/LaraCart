@@ -215,7 +215,20 @@ class ProductsController extends Controller
         // echo $url; die;
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
         $categoryList = Category::where(['url' => $url])->first();
-        $productsAll = Product::where(['category_id' => $categoryList->id])->get();
+        // $categoryList = json_decode(json_encode($categoryList));
+        // echo "<pre>"; print_r($categoryList);die;
+
+        if($categoryList->parent_id==0){
+            // if the url is a main category
+            $subCategories = Categories::where(['parent_id'=>$categoryList->id])->get();
+            
+        }
+        else{
+            // If the url is a sub category
+            $productsAll = Product::where(['category_id' => $categoryList->id])->get();
+        }
+
+        
 
         // echo $category->id; die;
         

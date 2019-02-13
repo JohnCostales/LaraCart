@@ -22,11 +22,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products/{url}', 'ProductsController@products');
 
-// React Templating
-
-//Change default view to a wildcard path
-Route::view('/{path?}', 'index');
-
 // Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/admin/dashboard','AdminController@dashboard');
