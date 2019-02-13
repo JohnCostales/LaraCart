@@ -212,16 +212,33 @@ class ProductsController extends Controller
     //Using Category URL variable to display items within the category
     public function products($url = null)
     {
+
+        // 404 if url or category status is null is incorrect
+        $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
+        // echo $countCategory;die;
+        if($countCategory==0){
+            abort(404);
+        }
         // echo $url; die;
+        //Get parent categories their sub categories
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+
         $categoryList = Category::where(['url' => $url])->first();
         // $categoryList = json_decode(json_encode($categoryList));
         // echo "<pre>"; print_r($categoryList);die;
 
         if($categoryList->parent_id==0){
             // if the url is a main category
-            $subCategories = Categories::where(['parent_id'=>$categoryList->id])->get();
-            
+            $subCategories = Category::where(['parent_id'=>$categoryList->id])->get();
+
+            foreach($subCategories as $key => $subcat){
+                $cat_ids[] = $subcat->id;
+            }
+            // print_r ($cat_ids);die;
+
+            $productsAll = Product::whereIn('category_id', $cat_ids)->get();
+            // $productsAll = json_decode(json_encode($productsAll));
+            // echo "<pre>"; print_r($productsAll);die;
         }
         else{
             // If the url is a sub category
