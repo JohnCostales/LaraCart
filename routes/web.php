@@ -20,7 +20,12 @@ Auth::routes();
 
 // All User Access
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Category/Listing Page
 Route::get('/products/{url}', 'ProductsController@products');
+
+// Category Detail Page
+Route::get('product/{id}', 'ProductsController@product');
 
 // Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){
