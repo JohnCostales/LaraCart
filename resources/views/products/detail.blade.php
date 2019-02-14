@@ -24,7 +24,7 @@
                                 <div class="panel-body">
                                     <ul>
                                         @foreach ($cat->categories as $subcat)
-                                        <li><a href="{{ $subcat->url }}">{{ $subcat->name }}</a></li>
+                                        <li><a href="{{ asset('/products/'.$subcat->url) }}">{{ $subcat->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -64,7 +64,7 @@
 								  <!-- Wrapper for slides -->
 								    <div class="carousel-inner">
 										<div class="item active">
-										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+										  <a href=""><img src="assetimages/product-details/similar1.jpg" alt=""></a>
 										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
 										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
 										</div>
