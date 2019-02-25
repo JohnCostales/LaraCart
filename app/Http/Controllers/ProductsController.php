@@ -239,7 +239,7 @@ class ProductsController extends Controller
         return redirect()->back()->with('flash_message_success', 'Attribute has been deleted successfully'); 
     }
 
-    //Using Category URL variable to display items within the category
+    // Using Category URL variable to display items within the category
     public function products($url = null)
     {
 
@@ -283,13 +283,27 @@ class ProductsController extends Controller
         return view('products.list')->with(compact('categories','categoryList', 'productsAll'));
     }
 
-    public function product($id = null){
+    public function product($id){
         // Product Details
-        $productDetails = Product::where('id', $id)->first();
+        $productDetails = Product::with('attributes')->where('id', $id)->first();
+        // $productDetails = json_decode(json_encode($productDetails));
+        // echo "<pre>"; print_r($productDetails); die;
         
         //Get parent categories their sub categories
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
 
         return view('products.detail')->with(compact('productDetails', 'categories'));
     }
+
+    // Get product attribute price by product id
+    public function getProductPrice(Request $request){
+        $data = $request->all();
+        // echo '<pre>'; print_r($data); die;
+        $prodArray = explode("-", $data['idSize']);
+        // echo $prodArray[0]; echo $prodArray[1]; die;
+        $prodAttr = ProductsAttribute::where(['product_id' => $prodArray[0], 'size' => $prodArray[1]])->first();
+            echo $prodAttr->price;
+
+    }
+
 }

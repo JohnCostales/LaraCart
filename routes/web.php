@@ -27,6 +27,9 @@ Route::get('/products/{url}', 'ProductsController@products');
 // Category Detail Page
 Route::get('product/{id}', 'ProductsController@product');
 
+// Product Attribute Price
+Route::get('/get-product-price', 'ProductsController@getProductPrice');
+
 // Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/admin/dashboard','AdminController@dashboard');
