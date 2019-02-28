@@ -149,7 +149,7 @@ class ProductsController extends Controller
     }
 
     public function viewProducts(){
-        $products = Product::get();
+        $products = Product::orderby('id','DESC')->get();
 
         // $products = json_decode(json_encode($products));
         // echo "<pre>"; print_r($products);die;
@@ -219,6 +219,17 @@ class ProductsController extends Controller
 
             foreach($data['sku'] as $key => $val){
                 if(!empty($val)){
+                    // SKU Check
+                    $countSku = ProductsAttribute::where('sku',$val)->count();
+                    $duplicateSize = ProductsAttribute::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
+
+                    if($countSku > 0){
+                        return redirect('admin/add-attributes/'.$id)->with('flash_message_error','SKU already exist');
+                    }// Check Duplicate sizes
+                    if($duplicateSize > 0 ){
+                        return redirect('admin/add-attributes/'.$id)->with('flash_message_error',''.$data['size'][$key].' size already exist');
+                    }
+
                     $attribute = new ProductsAttribute;
                     $attribute->product_id = $id; 
                     $attribute->sku = $val;
@@ -234,6 +245,14 @@ class ProductsController extends Controller
         
     }
 
+    public function updateAttributes(Request $request, $id)
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre"; print_r($data); die;
+        }       
+    }
+
     public function deleteAttribute($id){
         ProductsAttribute::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', 'Attribute has been deleted successfully'); 
@@ -242,7 +261,6 @@ class ProductsController extends Controller
     // Using Category URL variable to display items within the category
     public function products($url = null)
     {
-
         // 404 if url or category status is null is incorrect
         $countCategory = Category::where(['url'=>$url, 'status'=>1])->count();
         // echo $countCategory;die;
@@ -275,10 +293,7 @@ class ProductsController extends Controller
             $productsAll = Product::where(['category_id' => $categoryList->id])->get();
         }
 
-        
-
         // echo $category->id; die;
-        
         
         return view('products.list')->with(compact('categories','categoryList', 'productsAll'));
     }
@@ -303,7 +318,5 @@ class ProductsController extends Controller
         // echo $prodArray[0]; echo $prodArray[1]; die;
         $prodAttr = ProductsAttribute::where(['product_id' => $prodArray[0], 'size' => $prodArray[1]])->first();
             echo $prodAttr->price;
-
     }
-
 }

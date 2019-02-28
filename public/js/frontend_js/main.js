@@ -44,7 +44,9 @@ $(document).ready(function () {
         $.ajax({
             type: 'get',
             url: '/get-product-price',
-            data: { idSize: idSize },
+            data: {
+                idSize: idSize
+            },
             success: function (resp) {
                 // alert(resp);
                 $("#getPrice").html("EUR €" + resp);
