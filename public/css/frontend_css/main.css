@@ -156,28 +156,6 @@ a#scrollUp i {
     padding-right: 0;
 }
 
-.usa {
-    border-radius: 0;
-    color: #B4B1AB;
-    font-size: 12px;
-    margin-right: 20px;
-    padding: 2px 15px;
-    margin-top: 10px;
-}
-
-.usa:hover {
-    background: #FE980F;
-    color: #fff;
-    border-color: #FE980F;
-}
-
-.usa:active,
-.usa.active {
-    background: none repeat scroll 0 0 #FE980F;
-    box-shadow: inherit;
-    outline: 0 none;
-}
-
 .btn-group.open .dropdown-toggle {
     background: rgba(0, 0, 0, 0);
     box-shadow: none;
@@ -271,7 +249,7 @@ a#scrollUp i {
     outline: medium none;
     padding-left: 10px;
     width: 155px;
-    background-image: url(../images/home/searchicon.png);
+    background-image: url(/images/frontend_images/home/searchicon.png);
     background-repeat: no-repeat;
     background-position: 130px;
 }
@@ -1653,6 +1631,10 @@ h2.title {
     margin: 15px -70px 10px 25px;
 }
 
+.cart_product img {
+    width: 100px;
+}
+
 .cart_quantity_button a {
     background: #F0F0E9;
     color: #696763;
@@ -2523,4 +2505,8 @@ textarea {
 
 .contact-info .social-networks ul li a:hover {
     color: #FE980F;
+}
+
+.cartImage {
+    width: 100px;
 }

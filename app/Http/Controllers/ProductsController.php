@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 //-- HEADERS --//
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+// Extensions
 use Image;
 use Auth;
 use Session;
+// Models used
 use App\Category;
 use App\Product;
 use App\ProductsAttribute;
 
+
 class ProductsController extends Controller
 {
+    /*--- Admin controllers ---*/
     public function addProduct(Request $request)
     {
 
@@ -249,7 +253,13 @@ class ProductsController extends Controller
     {
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+            // Update all stock and price respective to the id they are being passed
+            foreach($data['attrId'] as $key => $attr){
+                ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price'=>$data['price'][$key], 'stock'=>$data['stock'][$key]]);
+            }
+            return redirect()->back()->with('flash_message_success', 'Product attributes has been updated successfully');
+            
         }       
     }
 
@@ -257,6 +267,10 @@ class ProductsController extends Controller
         ProductsAttribute::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', 'Attribute has been deleted successfully'); 
     }
+
+    //-------------------------------
+    /*--- Main page controllers ---*/
+    //-------------------------------
 
     // Using Category URL variable to display items within the category
     public function products($url = null)
@@ -307,7 +321,11 @@ class ProductsController extends Controller
         //Get parent categories their sub categories
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
 
-        return view('products.detail')->with(compact('productDetails', 'categories'));
+        //  Calculate the sum of total item stock
+        $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        // echo $totalStock; die;
+
+        return view('products.detail')->with(compact('productDetails', 'categories', 'totalStock'));
     }
 
     // Get product attribute price by product id
@@ -317,6 +335,9 @@ class ProductsController extends Controller
         $prodArray = explode("-", $data['idSize']);
         // echo $prodArray[0]; echo $prodArray[1]; die;
         $prodAttr = ProductsAttribute::where(['product_id' => $prodArray[0], 'size' => $prodArray[1]])->first();
-            echo $prodAttr->price;
+        echo $prodAttr->price;
+        echo "#";
+        echo $prodAttr->stock;
     }
+
 }

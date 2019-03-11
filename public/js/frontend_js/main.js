@@ -1,7 +1,7 @@
 /*price range*/
 $("#sl2").slider();
 
-var RGBChange = function () {
+var RGBChange = function() {
     $("#RGB").css(
         "background",
         "rgb(" + r.getValue() + "," + g.getValue() + "," + b.getValue() + ")"
@@ -10,9 +10,9 @@ var RGBChange = function () {
 
 /*scroll to top*/
 
-$(document).ready(function () {
+$(document).ready(function() {
     // alert("test");
-    $(function () {
+    $(function() {
         $.scrollUp({
             scrollName: "scrollUp", // Element ID
             scrollDistance: 300, // Distance from top/bottom before showing element (px)
@@ -33,8 +33,8 @@ $(document).ready(function () {
 });
 
 // Change the price depending on size
-$(document).ready(function () {
-    $("#selSize").change(function () {
+$(document).ready(function() {
+    $("#selSize").change(function() {
         // alert("test");
         var idSize = $(this).val();
         // alert(idSize);
@@ -42,16 +42,19 @@ $(document).ready(function () {
             return false;
         }
         $.ajax({
-            type: 'get',
-            url: '/get-product-price',
+            type: "get",
+            url: "/get-product-price",
             data: {
                 idSize: idSize
             },
-            success: function (resp) {
+            success: function(resp) {
                 // alert(resp);
-                $("#getPrice").html("EUR €" + resp);
+                // return false;
+                var dataArray = resp.split("#"); // Get two data and split with #
+                $("#getPrice").html("EUR €" + dataArray[0]);
+                $("#price").val(dataArray[0]);
             },
-            error: function () {
+            error: function() {
                 alert("Select an available size");
             }
         });

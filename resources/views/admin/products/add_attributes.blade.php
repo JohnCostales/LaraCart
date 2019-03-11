@@ -99,11 +99,11 @@
                                 <tbody>
                                     @foreach ($productDetails['attributes'] as $attribute)
                                     <tr class="gradeX">
-                                        <td>{{ $attribute->id }}</td>
+                                        <td><input type="hidden" name="attrId[]" value="{{ $attribute->id }}">{{ $attribute->id }}</td>
                                         <td>{{ $attribute->sku }}</td>
                                         <td>{{ $attribute->size }}</td>
                                         <td><input type="text" name="price[]" value="{{ $attribute->price }}"></td>
-                                        <td><input type="text" name="price[]" value="{{ $attribute->stock }}"></td>
+                                        <td><input type="text" name="stock[]" value="{{ $attribute->stock }}"></td>
                                         <td class="centre">
                                             <input type="submit" value="Update" class="btn btn-primary btn-mini">
                                             <a rel="{{ $attribute->id }}" rel1="delete-attribute" href="javascript:"

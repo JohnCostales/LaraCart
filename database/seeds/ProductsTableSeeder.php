@@ -27,6 +27,15 @@ class ProductsTableSeeder extends Seeder
         $product->image = '27441.jpg';
         $product->save();
 
+        $product = new Product;
+        $product->category_id = 4;
+        $product->product_name = 'Smiley Doggo';
+        $product->product_code = 'PAINT0003';
+        $product->description = $faker->sentence;
+        $product->price = $faker->numberBetween(1,100);
+        $product->image = '61592.jpg';
+        $product->save();
+
         // Oil Painting
         $product = new Product;
         $product->category_id = 5;

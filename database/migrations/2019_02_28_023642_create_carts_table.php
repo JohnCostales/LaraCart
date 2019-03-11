@@ -19,7 +19,8 @@ class CreateCartsTable extends Migration
             $table->string('product_name');
             $table->string('product_code');
             $table->string('size');
-            $table->string('quantity');
+            $table->float('price');
+            $table->integer('quantity');
             $table->string('user_email');
             $table->string('session_id');
             $table->timestamps();
