@@ -28,7 +28,6 @@
                             <input type="hidden" name="price" id="price" value="{{ $productDetails->price }}">
                             <div class="product-information">
                                 <!--/product-information-->
-                                <img src="" class="newarrival" alt="" />
                                 <h2>{{ $productDetails->product_name }}</h2>
                                 <p>Code: {{ $productDetails->product_code }}</p>
                                 <p>

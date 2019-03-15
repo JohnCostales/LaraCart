@@ -271,7 +271,6 @@ class ProductsController extends Controller
     //-------------------------------
     /*--- Main page controllers ---*/
     //-------------------------------
-
     // Using Category URL variable to display items within the category
     public function products($url = null)
     {
@@ -339,5 +338,4 @@ class ProductsController extends Controller
         echo "#";
         echo $prodAttr->stock;
     }
-
 }

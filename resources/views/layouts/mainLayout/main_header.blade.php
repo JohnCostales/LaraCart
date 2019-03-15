@@ -77,7 +77,8 @@ $mainCategories = Controller::mainCategories();
                                     @endif
                                     @endforeach
                                 </ul>
-                            </li> 
+                            </li>
+                            <li><a href="{{ url('/cart') }}" class="active">Cart</a></li> 
                             <!-- <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
