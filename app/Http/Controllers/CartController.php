@@ -41,17 +41,29 @@ class CartController extends Controller
         $sizeArr = explode("-",$data['size']);
         // echo "<pre>"; print_r($sizeArr); die;
 
-        // Insert in to carts table
-        DB::table('carts')->insert([
-            'product_id'=>$data['product_id'], 
-            'product_name'=>$data['product_name'],
-            'product_code'=>$data['product_code'],
+        $countProducts = DB::table('carts')->where([
+            'product_id'=>$data['product_id'],
             'size'=>$sizeArr[1],
-            'price'=>$data['price'],
-            'quantity'=>$data['quantity'],
-            'user_email'=>$data['user_email'],
             'session_id'=>$session_id,
-            ]);
+            ])->count();
+            // echo $countProducts; die;
+
+            // Insert in to carts table
+            if($countProducts>0){
+                return redirect()->back()->with('flash_message_error', 'Product already exists in Cart');
+            }
+            else{
+                DB::table('carts')->insert([
+                    'product_id'=>$data['product_id'], 
+                    'product_name'=>$data['product_name'],
+                    'product_code'=>$data['product_code'],
+                    'size'=>$sizeArr[1],
+                    'price'=>$data['price'],
+                    'quantity'=>$data['quantity'],
+                    'user_email'=>$data['user_email'],
+                    'session_id'=>$session_id,
+                    ]);
+            }
             
         return redirect('cart')->with('flash_message_success', 'Product has been added to your cart!');
     }
@@ -78,5 +90,11 @@ class CartController extends Controller
         // Delete product from cart
         DB::table('carts')->where('id', $id)->delete();
         return redirect('cart')->with('flash_message_success', 'Product has been deleted from your cart');
+    }
+
+    // Update cart quantity
+    public function updateCartQuantity($id, $quantity = null){
+        DB::table('carts')->where('id',$id)->increment('quantity',$quantity); // Laravel 5.6 allows the use of increments and decrements to add or subtract quantity
+        return redirect('cart')->with('flash_message_success', 'Product quanitity has been updated from your cart');
     }
 }

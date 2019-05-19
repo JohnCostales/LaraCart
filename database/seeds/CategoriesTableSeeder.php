@@ -32,6 +32,13 @@ class CategoriesTableSeeder extends Seeder
         $category->url = 'drawing-and-illustration';
         $category->save();
 
+        $category = new Category;
+        $category->parent_id = 0;
+        $category->name = 'Drawing & Illustraion';
+        $category->description = $faker->sentence;
+        $category->url = 'drawing-and-illustration';
+        $category->save();
+
         // Painting Category
         $category = new Category;
         $category->parent_id = 1;

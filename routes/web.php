@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::match(['get', 'post'], '/admin', 'AdminController@login');
 
 Auth::routes();
@@ -26,7 +24,7 @@ Route::get('/', 'IndexController@index');
 /*--- Products Controller ---*/
 // Category/Listing Page
 Route::get('/products/{url}', 'ProductsController@products');
-// Category Detail Page
+// Product Detail Page
 Route::get('product/{id}', 'ProductsController@product');
 // Product Attribute Price
 Route::get('/get-product-price', 'ProductsController@getProductPrice');
@@ -38,6 +36,8 @@ Route::match(['get', 'post'], '/add-cart','CartController@addtocart');
 Route::match(['get', 'post'], '/cart','CartController@shoppingCart');
 // Delete Product from Cart Page
 Route::get('/cart/delete-product/{id}', 'CartController@deleteCart');
+// Update Product Quantity
+Route::get('/cart/update-quantity/{id}/{quantity}','CartController@updateCartQuantity'); 
 
 // Admin middleware. Routes only accissible to logged in users
 Route::group(['middleware' => ['auth']], function(){

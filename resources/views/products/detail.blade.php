@@ -4,6 +4,12 @@
 <section>
     <div class="container">
         <div class="row">
+        @if(Session::has('flash_message_error'))
+            <div class="alert alert-warning alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+        @endif
             <div class="col-sm-3">
                 @include('layouts.mainLayout.main_sidebar')
             </div>
@@ -34,7 +40,7 @@
                                 <p>
                                     <!-- Show each sizes available -->
                                     <select id="selSize" name="size">
-                                        <option value="">Length x Height in centimeters</option>
+                                        <option value="">Size:</option>
                                         @foreach($productDetails->attributes as $sizes)
                                         <option value="{{ $productDetails->id }}-{{ $sizes->size }}">{{ $sizes-> size
                                             }}</option>
@@ -91,7 +97,6 @@
                         </div>
 
                     </div>
-
                 </div>
             </div>
 

@@ -246,7 +246,6 @@ class ProductsController extends Controller
             return redirect('admin/add-attributes/'.$id)->with('flash_message_success','Product details added');
         }
         return view('admin.products.add_attributes')->with(compact('productDetails'));
-        
     }
 
     public function updateAttributes(Request $request, $id)
@@ -259,7 +258,6 @@ class ProductsController extends Controller
                 ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price'=>$data['price'][$key], 'stock'=>$data['stock'][$key]]);
             }
             return redirect()->back()->with('flash_message_success', 'Product attributes has been updated successfully');
-            
         }       
     }
 
@@ -306,9 +304,8 @@ class ProductsController extends Controller
             // If the url is a sub category
             $productsAll = Product::where(['category_id' => $categoryList->id])->get();
         }
-
-        // echo $category->id; die;
-        
+ 
+        // echo $category->id; die;    
         return view('products.list')->with(compact('categories','categoryList', 'productsAll'));
     }
 

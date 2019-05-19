@@ -26,9 +26,6 @@
         </div>
     </div>
     <!--/category-products-->
-
     <!--/price-range-->
-
     <!--/shipping-->
-
 </div>
